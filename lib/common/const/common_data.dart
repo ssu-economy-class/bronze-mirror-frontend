@@ -1,0 +1,1 @@
+const APP_NAME = '청동거울';

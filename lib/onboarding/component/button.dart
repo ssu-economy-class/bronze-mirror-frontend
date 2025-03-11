@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:bronze_mirror/common/design_system.dart';
+import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 // 카카오 로그인 버튼
