@@ -16,9 +16,9 @@ class LoginScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _Title(),
-          SizedBox(height: deviceHeight*0.075),
+          SizedBox(height: deviceHeight * 0.075),
           BronzeMirror(),
-          SizedBox(height: deviceHeight*0.2),
+          SizedBox(height: deviceHeight * 0.2),
           KakaoButton(),
         ],
       ),
@@ -31,10 +31,13 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(APP_NAME, style: TextStyle(
-      fontFamily: 'Hambaksnow',
-      fontSize: 48,
-      color: PRIMARY_400,
-    ),);
+    return Text(
+      APP_NAME,
+      style: TextStyle(
+        fontFamily: 'Hambaksnow',
+        fontSize: 48,
+        color: PRIMARY_400,
+      ),
+    );
   }
 }

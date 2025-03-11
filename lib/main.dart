@@ -1,7 +1,7 @@
 import 'package:bronze_mirror/env.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-import 'onboarding/screen/login_screen.dart';
+import 'onboarding/view/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
