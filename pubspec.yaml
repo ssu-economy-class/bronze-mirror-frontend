@@ -91,6 +91,9 @@ flutter:
           weight: 600
         - asset: assets/font/Pretendard-Thin.otf
           weight: 100
+    - family: HambakSnow
+      fonts:
+        - asset: assets/font/Hambaksnow.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
