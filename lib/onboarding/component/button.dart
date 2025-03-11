@@ -11,19 +11,14 @@ class KakaoButton extends StatelessWidget {
     try {
       // 카카오톡 앱 로그인 시도
       OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
-      showSnackBar(context, '카카오톡 로그인 성공!');
-      print('카카오톡(앱)으로 로그인 성공: ${token.accessToken}');
     } catch (error) {
       // 카카오톡 앱 로그인 실패
       try {
         // 웹으로 로그인 시도
         OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-        showSnackBar(context, '카카오 계정 로그인 성공!');
-        print('카카오 계정으로 로그인 성공: ${token.accessToken}');
       } catch (error) {
         // 웹 로그인 실패
-        showSnackBar(context, '카카오 로그인 실패. 다시 시도해주세요.');
-        print('카카오 계정으로 로그인 실패: $error');
+        showSnackBar(context, '카카오톡 로그인 실패. 다시 시도해주세요.');
       }
     }
   }
