@@ -1,3 +1,4 @@
+import 'package:bronze_mirror/common/view/root_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -21,6 +22,11 @@ class KakaoButton extends StatelessWidget {
         showSnackBar(context, '카카오톡 로그인 실패. 다시 시도해주세요.');
       }
     }
+    // 카카오 로그인 후 RootTap으로 이동
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const RootTab()),
+    );
   }
 
   // 사용자에게 로그인 성공/실패 메시지를 보여주는 함수(임시)
@@ -52,7 +58,7 @@ class KakaoButton extends StatelessWidget {
               'assets/icon/kakao.png',
             ),
             const SizedBox(width: 16),
-            Text('카카오 로그인', style: typoBodyBold),
+            Text('카카오 로그인', style: BODY_BOLD_16),
           ],
         ),
       ),
