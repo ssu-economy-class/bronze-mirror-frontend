@@ -1,9 +1,9 @@
 import 'package:bronze_mirror/common/layout/default_layout.dart';
-import 'package:bronze_mirror/immerse/component/button.dart';
+import 'package:bronze_mirror/common/style/design_system.dart';
+import 'package:bronze_mirror/immerse/component/icon_button.dart';
 import 'package:bronze_mirror/immerse/view/image_view_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide IconButton;
 import 'package:image_picker/image_picker.dart';
-
 import '../utils/camera.dart';
 
 // 기기의 카메라, 갤러리와 연동하는 스크린입니다.
@@ -18,13 +18,17 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      child: SizedBox(
+      child: Container(
         width: double.infinity,
-        child: Column(
+        height: double.infinity,
+        decoration: BoxDecoration(
+          gradient: BACKGROUND
+        ),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Button(
+            IconButton(
               onPressed: () {
                 pickImage(
                   context: context,
@@ -33,8 +37,10 @@ class _CameraScreenState extends State<CameraScreen> {
                 );
               },
               text: '카메라',
+              icon: Icons.camera_alt_outlined,
             ),
-            Button(
+            SizedBox(width: 16),
+            IconButton(
               onPressed: () {
                 pickImage(
                   context: context,
@@ -43,6 +49,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 );
               },
               text: '갤러리',
+              icon: Icons.image_outlined,
             ),
           ],
         ),

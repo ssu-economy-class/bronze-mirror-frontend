@@ -7,6 +7,7 @@ class DefaultLayout extends StatelessWidget {
   final Color? backgroundColor;
   final String? title;
   final Widget? bottomNavigationBar;
+
   const DefaultLayout({
     required this.child,
     this.backgroundColor,
@@ -25,10 +26,10 @@ class DefaultLayout extends StatelessWidget {
     );
   }
 
-  AppBar? renderAppbar(){
-    if(title == null){
+  AppBar? renderAppbar() {
+    if (title == null || title=='Immerse') {
       return null;
-    }else{
+    } else {
       return AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
@@ -40,5 +41,4 @@ class DefaultLayout extends StatelessWidget {
       );
     }
   }
-
 }

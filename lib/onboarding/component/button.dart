@@ -58,7 +58,7 @@ class KakaoButton extends StatelessWidget {
               'assets/icon/kakao.png',
             ),
             const SizedBox(width: 16),
-            Text('카카오 로그인', style: BODY_BOLD_16),
+            Text('카카오 로그인', style: BODY_16),
           ],
         ),
       ),

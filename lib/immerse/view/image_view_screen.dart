@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:bronze_mirror/common/layout/default_layout.dart';
+import 'package:bronze_mirror/common/style/design_system.dart';
+import 'package:bronze_mirror/immerse/component/wide_button.dart';
+import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,8 +10,33 @@ import 'package:image_picker/image_picker.dart';
 
 // imagePicker로 불러온 이미지를 보기 위한 스크린
 
-class ImageViewScreen extends ConsumerWidget {
+class ImageViewScreen extends StatelessWidget {
   const ImageViewScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return ImmerseLayout(
+      title: 'Select',
+      child: Container(
+        height: double.infinity,
+        width: double.infinity,
+        decoration: BoxDecoration(gradient: BACKGROUND),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _ImageSection(),
+            WideButton(onPressed: () {}, text: 'Start to Draw'),
+            SizedBox(height: 88)
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ImageSection extends ConsumerWidget {
+  const _ImageSection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,22 +46,20 @@ class ImageViewScreen extends ConsumerWidget {
     // 이미지가 없으면 안내 메시지 출력
     if (image == null) {
       return Scaffold(
-        appBar: AppBar(title: const Text("이미지 보기")),
         body: const Center(child: Text("선택된 이미지가 없거나 형식이 잘못됐습니다.")),
       );
     }
 
-    final double screenWidth = MediaQuery.of(context).size.width;
-
-    return Scaffold(
-      appBar: AppBar(title: const Text("이미지 보기")),
-      body: Center(
+    return Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 40.0),
         child: Image.file(
           File(image.path),
-          width: screenWidth * 0.5,
+          width: double.infinity,
           fit: BoxFit.contain,
         ),
       ),
     );
   }
 }
+
