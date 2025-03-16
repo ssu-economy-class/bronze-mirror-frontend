@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../utils/camera.dart';
+import 'ar_view_screen.dart';
 
 // 기기의 카메라, 갤러리와 연동하는 스크린입니다.
 class CameraScreen extends StatefulWidget {
