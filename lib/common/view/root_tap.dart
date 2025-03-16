@@ -1,6 +1,7 @@
 import 'package:bronze_mirror/common/const/common_data.dart';
 import 'package:bronze_mirror/common/layout/default_layout.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
+import 'package:bronze_mirror/immerse/view/camera_screen.dart';
 import 'package:flutter/material.dart';
 
 class RootTab extends StatefulWidget {
@@ -50,7 +51,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin{
           children: [
             Center(child:Container(child: Text('Home'))),
             Center(child:Container(child: Text('Map'))),
-            Center(child:Container(child: Text('Immerse'))),
+            CameraScreen(),
             Center(child:Container(child: Text('Calendar'))),
             Center(child:Container(child: Text('User'))),
           ],
