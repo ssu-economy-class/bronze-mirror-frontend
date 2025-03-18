@@ -56,9 +56,11 @@ class KakaoButton extends StatelessWidget {
           children: [
             Image.asset(
               'assets/icon/kakao.png',
+              width: 20,
+              height: 21,
             ),
             const SizedBox(width: 16),
-            Text('카카오 로그인', style: BODY_16),
+            Text('카카오 로그인', style: BODY_16.copyWith(color: Colors.black)),
           ],
         ),
       ),

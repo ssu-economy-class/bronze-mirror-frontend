@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 class ImmerseLayout extends StatelessWidget {
   final Widget child;
   final String title;
+  final Color color;
 
-  const ImmerseLayout({super.key, required this.child, required this.title});
+  const ImmerseLayout({super.key, required this.child, required this.title, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ImmerseLayout extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 24),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 24),
+                icon: Icon(Icons.arrow_back_ios, color: color, size: 24),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ),
@@ -35,7 +36,7 @@ class ImmerseLayout extends StatelessWidget {
           Center(
             child: Text(
               title,
-              style: BODY_BOLD.copyWith(color: WHITE),
+              style: BODY_BOLD.copyWith(color: color),
               textAlign: TextAlign.center,
             ),
           ),

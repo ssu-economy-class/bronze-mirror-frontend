@@ -52,7 +52,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin{
           children: [
             Center(child:Container(child: Text('Home'))),
             Center(child:Container(child: Text('Map'))),
-            ImmerseScreen(),
+            CameraScreen(),
             Center(child:Container(child: Text('Calendar'))),
             Center(child:Container(child: Text('User'))),
           ],

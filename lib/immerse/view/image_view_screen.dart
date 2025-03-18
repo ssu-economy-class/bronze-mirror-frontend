@@ -4,6 +4,7 @@ import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/immerse/component/wide_button.dart';
 import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
+import 'package:bronze_mirror/immerse/view/guide_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -15,19 +16,23 @@ class ImageViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ImmerseLayout(
       title: 'Select',
+      color: WHITE,
       child: Container(
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(gradient: BACKGROUND),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             _ImageSection(),
-            WideButton(onPressed: () {}, text: 'Start to Draw'),
-            SizedBox(height: 88)
+            WideButton(
+              onPressed:
+                  () => Navigator.push(context, MaterialPageRoute(builder: (_) => GuideScreen()),),
+              text: 'Select Image',
+            ),
+            SizedBox(height: 88),
           ],
         ),
       ),
@@ -62,4 +67,3 @@ class _ImageSection extends ConsumerWidget {
     );
   }
 }
-
