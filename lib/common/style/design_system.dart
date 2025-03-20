@@ -22,7 +22,7 @@ const BODY_16 = TextStyle(fontSize: 16, height: 1.5, letterSpacing: -0.5);
 const BODY_14 = TextStyle(fontSize: 14, height: 1.4, letterSpacing: -0.5);
 
 const BODY_BOLD = TextStyle(
-  fontSize: 18,
+  fontSize: 16,
   height: 1.5,
   letterSpacing: -0.5,
   fontWeight: FontWeight.w700,

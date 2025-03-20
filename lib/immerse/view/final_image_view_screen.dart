@@ -2,23 +2,19 @@ import 'dart:io';
 import 'package:bronze_mirror/common/provider/size_provider.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/immerse/component/button/wide_button.dart';
-import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
-import 'package:bronze_mirror/immerse/view/image_draw_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
-// imagePicker로 불러온 이미지를 보기 위한 스크린
-class ImageViewScreen extends StatelessWidget {
-  const ImageViewScreen({super.key});
+// finalImage를 보기 위한 스크린
+class FinalImageViewScreen extends StatelessWidget {
+  const FinalImageViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ImmerseLayout(
-      title: 'Select',
-      color: WHITE,
-      child: Container(
+    return Scaffold(
+      body: Container(
         height: double.infinity,
         width: double.infinity,
         decoration: BoxDecoration(gradient: BACKGROUND),
@@ -29,8 +25,8 @@ class ImageViewScreen extends StatelessWidget {
             SizedBox(height: 64),
             WideButton(
               onPressed:
-                  () => Navigator.push(context, MaterialPageRoute(builder: (_) => ImageDrawScreen()),),
-              text: 'Select Image',
+                  () => Navigator.push(context, MaterialPageRoute(builder: (_) => Center()),),
+              text: 'Submit',
             ),
             SizedBox(height: 88),
           ],
@@ -45,7 +41,7 @@ class _ImageSection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final XFile? image = ref.watch(imageProvider);
+    final XFile? image = ref.watch(finalImageProvider);
     final double deviceHeight = ref.read(deviceHeightProvider);
 
     // 이미지가 없으면 안내 메시지 출력

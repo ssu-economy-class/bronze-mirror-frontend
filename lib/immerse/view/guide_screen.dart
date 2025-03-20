@@ -1,8 +1,9 @@
 import 'package:bronze_mirror/common/style/design_system.dart';
-import 'package:bronze_mirror/immerse/component/wide_button.dart';
+import 'package:bronze_mirror/immerse/component/button/wide_button.dart';
 import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:flutter/material.dart';
 
+// 서비스 설명서 스크린
 class GuideScreen extends StatelessWidget {
   const GuideScreen({super.key});
 
@@ -20,7 +21,7 @@ class GuideScreen extends StatelessWidget {
           children: [
             _ImageSection(),
             _ManualSection(),
-            WideButton(onPressed: () {}, text: 'Start to Draw'),
+            WideButton(onPressed: () => Navigator.pop, text: 'Start to Draw'),
             SizedBox(height: 88),
           ],
         ),

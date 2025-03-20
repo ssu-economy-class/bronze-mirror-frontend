@@ -1,12 +1,12 @@
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:flutter/material.dart';
 
-class IconButton extends StatelessWidget {
+class LargeIconButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
   final IconData icon;
 
-  const IconButton({required this.icon, required this.onPressed, this.text = '', super.key});
+  const LargeIconButton({required this.icon, required this.onPressed, this.text = '', super.key});
 
   @override
   Widget build(BuildContext context) {

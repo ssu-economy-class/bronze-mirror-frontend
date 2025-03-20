@@ -1,4 +1,5 @@
 import 'package:bronze_mirror/common/style/design_system.dart';
+import 'package:bronze_mirror/immerse/view/guide_screen.dart';
 import 'package:flutter/material.dart';
 
 // immerse screen의 공통 레이아웃입니다.
@@ -6,12 +7,14 @@ class ImmerseLayout extends StatelessWidget {
   final Widget child;
   final String title;
   final Color color;
+  final Color backgroundColor;
+  final bool isLeftIcon;
 
-  const ImmerseLayout({super.key, required this.child, required this.title, required this.color});
+  const ImmerseLayout({super.key, required this.child, required this.title, required this.color, this.backgroundColor = Colors.black, this.isLeftIcon = false});
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(child: Scaffold(body: Stack(children: [child, _Appbar(context)])));
+    return SafeArea(child: Scaffold(backgroundColor: backgroundColor,body: Stack(children: [child, _Appbar(context)])));
   }
 
   // 앱바
@@ -40,6 +43,24 @@ class ImmerseLayout extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
+          if(isLeftIcon)
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right : 24),
+                child: SizedBox(
+                  width: 36.0,
+                  height: 36.0,
+                  child: IconButton(
+                    icon: Text('i', style: TextStyle(color:WHITE, fontSize: 16.0),),
+                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GuideScreen())),
+                    style: IconButton.styleFrom(
+                      backgroundColor: PRIMARY,
+                    ),
+                  ),
+                ),
+              ),
+            ),
         ],
       ),
     );

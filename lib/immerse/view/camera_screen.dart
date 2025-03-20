@@ -1,6 +1,7 @@
 import 'package:bronze_mirror/common/layout/default_layout.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
-import 'package:bronze_mirror/immerse/component/icon_button.dart';
+import 'package:bronze_mirror/immerse/component/button/large_icon_button.dart';
+import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
 import 'package:bronze_mirror/immerse/view/image_view_screen.dart';
 import 'package:flutter/material.dart' hide IconButton;
 import 'package:image_picker/image_picker.dart';
@@ -28,10 +29,11 @@ class _CameraScreenState extends State<CameraScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            IconButton(
+            LargeIconButton(
               onPressed: () {
                 pickImage(
                   context: context,
+                  imageProvider: imageProvider,
                   source: ImageSource.camera,
                   nextScreen: ImageViewScreen(),
                 );
@@ -40,10 +42,11 @@ class _CameraScreenState extends State<CameraScreen> {
               icon: Icons.camera_alt_outlined,
             ),
             SizedBox(width: 16),
-            IconButton(
+            LargeIconButton(
               onPressed: () {
                 pickImage(
                   context: context,
+                  imageProvider: imageProvider,
                   source: ImageSource.gallery,
                   nextScreen: ImageViewScreen(),
                 );
