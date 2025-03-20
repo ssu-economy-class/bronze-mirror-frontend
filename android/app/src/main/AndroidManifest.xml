@@ -10,7 +10,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <application
         android:label="bronze_mirror"
-        android:name="${applicationName}"
+        android:name="청동거울"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
