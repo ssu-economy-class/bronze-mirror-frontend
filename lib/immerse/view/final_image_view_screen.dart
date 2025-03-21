@@ -3,9 +3,12 @@ import 'package:bronze_mirror/common/provider/size_provider.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/immerse/component/button/wide_button.dart';
 import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
+import 'package:bronze_mirror/immerse/view/mirror_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../utils/camera.dart';
 
 // finalImage를 보기 위한 스크린
 class FinalImageViewScreen extends StatelessWidget {
@@ -25,10 +28,15 @@ class FinalImageViewScreen extends StatelessWidget {
             SizedBox(height: 64),
             WideButton(
               onPressed:
-                  () => Navigator.push(context, MaterialPageRoute(builder: (_) => Center()),),
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => ImageGenerationScreen()),
+                  ),
               text: 'Submit',
             ),
-            SizedBox(height: 88),
+            SizedBox(height: 8),
+            RollbackText(),
+            SizedBox(height: 64),
           ],
         ),
       ),
@@ -65,3 +73,29 @@ class _ImageSection extends ConsumerWidget {
     );
   }
 }
+
+class RollbackText extends StatelessWidget {
+  const RollbackText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap:
+          () => pickImage(
+        imageProvider: finalImageProvider,
+        source: ImageSource.camera,
+        nextScreen: FinalImageViewScreen(),
+        context: context,
+      ),
+      child: Text(
+        'Take another photo',
+        style: BODY_MID.copyWith(
+          color: WHITE,
+          decoration: TextDecoration.underline,
+          decorationColor: WHITE,
+        ),
+      ),
+    );
+  }
+}
+

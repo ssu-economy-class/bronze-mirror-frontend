@@ -1,4 +1,6 @@
 import 'package:bronze_mirror/env.dart';
+import 'package:bronze_mirror/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,11 +8,14 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'common/provider/size_provider.dart';
 import 'onboarding/view/login_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   KakaoSdk.init(
     nativeAppKey: NATIVE_APP_KEY,
     javaScriptAppKey: JAVASCRIPT_APP_KEY,
+  );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitDown,

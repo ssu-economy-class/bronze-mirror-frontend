@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "764954781636",
+    "project_id": "bronze-mirror",
+    "storage_bucket": "bronze-mirror.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:764954781636:android:ce45c9b812bd8ad02ee691",
+        "android_client_info": {
+          "package_name": "com.example.bronze_mirror"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYgEms4tRyjATpAQpTaRvXqE92a9UNxEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
