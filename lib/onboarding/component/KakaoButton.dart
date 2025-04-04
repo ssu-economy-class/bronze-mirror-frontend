@@ -1,3 +1,4 @@
+import 'package:bronze_mirror/common/component/snack_bar.dart';
 import 'package:bronze_mirror/common/view/root_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
@@ -5,36 +6,8 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
 // 카카오 로그인 버튼
 class KakaoButton extends StatelessWidget {
-  const KakaoButton({super.key});
-
-  // 로그인 요청 함수
-  Future<void> loginWithKakao(BuildContext context) async {
-    try {
-      // 카카오톡 앱 로그인 시도
-      OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
-    } catch (error) {
-      // 카카오톡 앱 로그인 실패
-      try {
-        // 웹으로 로그인 시도
-        OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-      } catch (error) {
-        // 웹 로그인 실패
-        showSnackBar(context, '카카오톡 로그인 실패. 다시 시도해주세요.');
-      }
-    }
-    // 카카오 로그인 후 RootTap으로 이동
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const RootTab()),
-    );
-  }
-
-  // 사용자에게 로그인 성공/실패 메시지를 보여주는 함수(임시)
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
+  final VoidCallback onClick;
+  const KakaoButton({required this.onClick, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +16,7 @@ class KakaoButton extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 36),
       height: 52,
       child: ElevatedButton(
-        onPressed: () => loginWithKakao(context),
+        onPressed: onClick,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0XFFFEE500),
           shape: RoundedRectangleBorder(

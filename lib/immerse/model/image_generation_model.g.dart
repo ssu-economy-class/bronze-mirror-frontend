@@ -9,29 +9,23 @@ part of 'image_generation_model.dart';
 ImageGenerationRequest _$ImageGenerationRequestFromJson(
   Map<String, dynamic> json,
 ) => ImageGenerationRequest(
+  userId: json['userId'] as String,
   imageUrl: json['imageUrl'] as String,
   prompt: json['prompt'] as String,
-  numInferenceSteps: (json['numInferenceSteps'] as num).toInt(),
 );
 
 Map<String, dynamic> _$ImageGenerationRequestToJson(
   ImageGenerationRequest instance,
 ) => <String, dynamic>{
+  'userId': instance.userId,
   'imageUrl': instance.imageUrl,
   'prompt': instance.prompt,
-  'numInferenceSteps': instance.numInferenceSteps,
 };
 
 ImageGenerationResponse _$ImageGenerationResponseFromJson(
   Map<String, dynamic> json,
-) => ImageGenerationResponse(
-  savedImageUrl: json['savedImageUrl'] as String,
-  generatedImageUrl: json['generatedImageUrl'] as String,
-);
+) => ImageGenerationResponse(savedImageUrl: json['savedImageUrl'] as String);
 
 Map<String, dynamic> _$ImageGenerationResponseToJson(
   ImageGenerationResponse instance,
-) => <String, dynamic>{
-  'savedImageUrl': instance.savedImageUrl,
-  'generatedImageUrl': instance.generatedImageUrl,
-};
+) => <String, dynamic>{'savedImageUrl': instance.savedImageUrl};

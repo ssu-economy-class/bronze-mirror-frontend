@@ -33,6 +33,7 @@ const CAPTION_13 = TextStyle(fontSize: 13, height: 1.4, letterSpacing: -0.5);
 const BODY_MID = TextStyle(fontSize: 14, height: 1.4, letterSpacing: -0.5);
 
 // Color System
+const LIGHT = Color(0XFFA0BCB1);
 const PRIMARY_100 = Color(0XFF588F80);
 const PRIMARY_200 = Color(0XFF357463);
 const PRIMARY = Color(0XFF20604F);

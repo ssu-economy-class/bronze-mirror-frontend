@@ -3,7 +3,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 Future<String> uploadImageToFirebase(XFile image) async {
-  final fileName = 'uploads/${DateTime.now().millisecondsSinceEpoch}_${image.name}';
+  final fileName = 'images/${DateTime.now().millisecondsSinceEpoch}_${image.name}';
   final ref = FirebaseStorage.instance.ref().child(fileName);
   print(ref);
 

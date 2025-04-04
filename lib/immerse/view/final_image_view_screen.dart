@@ -7,7 +7,6 @@ import 'package:bronze_mirror/immerse/view/mirror_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../utils/camera.dart';
 
 // finalImage를 보기 위한 스크린
@@ -30,7 +29,7 @@ class FinalImageViewScreen extends StatelessWidget {
               onPressed:
                   () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => ImageGenerationScreen()),
+                    MaterialPageRoute(builder: (_) => MirrorScreen()),
                   ),
               text: 'Submit',
             ),

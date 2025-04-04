@@ -15,16 +15,16 @@ class ImageGenerationNotifier extends StateNotifier<AsyncValue<ImageGenerationRe
 
   /// 이미지 생성 요청
   Future<void> generateImage({
+    required String userId,
     required String imageUrl,
     required String prompt,
-    required int numInferenceSteps,
   }) async {
     state = const AsyncValue.loading();
     try {
       final request = ImageGenerationRequest(
+        userId: userId,
         imageUrl: imageUrl,
         prompt: prompt,
-        numInferenceSteps: numInferenceSteps,
       );
       final response = await repository.uploadImage(request);
       state = AsyncValue.data(response);
