@@ -21,7 +21,7 @@ class WideButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          child: Text(text, style: BODY_14.copyWith(color: WHITE)),
+          child: Text(text, style: BODY_BOLD.copyWith(color: WHITE)),
           ),
         ),
     );

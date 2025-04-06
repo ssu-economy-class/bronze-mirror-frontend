@@ -4,6 +4,7 @@ import 'package:retrofit/retrofit.dart';
 import '../../common/provider/dio_provider.dart';
 part 'login_repository.g.dart';
 
+/// 로그인 요청 api 레포지토리
 final loginRepositoryProvider = Provider<LoginRepository>((ref) {
   final dio = ref.watch(dioProvider);
   return LoginRepository(dio);

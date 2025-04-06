@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:bronze_mirror/common/provider/size_provider.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
-import 'package:bronze_mirror/immerse/component/button/wide_button.dart';
+import 'package:bronze_mirror/common/component/wide_button.dart';
 import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
-import 'package:bronze_mirror/immerse/view/mirror_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'mirror_screen.dart';
 import '../utils/camera.dart';
 
 // finalImage를 보기 위한 스크린

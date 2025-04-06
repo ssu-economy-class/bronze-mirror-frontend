@@ -19,7 +19,7 @@ class LoginScreen extends ConsumerWidget {
         children: [
           _Title(),
           SizedBox(height: deviceHeight * 0.075),
-          BronzeMirror(),
+          Hero(tag: 'MIRROR', child: BronzeMirror()),
           SizedBox(height: deviceHeight * 0.2),
           KakaoButton(onClick: () => loginWithKakao(context, ref)),
         ],

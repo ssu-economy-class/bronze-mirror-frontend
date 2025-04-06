@@ -1,6 +1,8 @@
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:flutter/material.dart';
 
+import '../../user/view/setting_screen.dart';
+
 // 공통적으로 사용될 수 있는 Appbar 레이아웃입니다.
 class DefaultLayout extends StatelessWidget {
   final Widget child;
@@ -20,14 +22,14 @@ class DefaultLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor ?? Colors.white,
-      appBar: renderAppbar(),
+      appBar: renderAppbar(context),
       body: child,
       bottomNavigationBar: bottomNavigationBar,
     );
   }
 
-  AppBar? renderAppbar() {
-    if (title == null || title=='Immerse') {
+  AppBar? renderAppbar(BuildContext context) {
+    if (title == null || title == 'Immerse') {
       return null;
     } else {
       return AppBar(
@@ -38,6 +40,17 @@ class DefaultLayout extends StatelessWidget {
           child: Text(title!, style: SUB_TITLE_19),
         ),
         foregroundColor: Colors.black,
+        actions: [
+          if (title == 'User')
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const SettingScreen()),
+                );
+              },
+              icon: Icon(Icons.menu),
+            ),
+        ],
       );
     }
   }

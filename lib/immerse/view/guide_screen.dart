@@ -1,5 +1,5 @@
 import 'package:bronze_mirror/common/style/design_system.dart';
-import 'package:bronze_mirror/immerse/component/button/wide_button.dart';
+import 'package:bronze_mirror/common/component/wide_button.dart';
 import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:flutter/material.dart';
 

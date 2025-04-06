@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:bronze_mirror/common/provider/size_provider.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
-import 'package:bronze_mirror/immerse/component/button/wide_button.dart';
+import 'package:bronze_mirror/common/component/wide_button.dart';
 import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
 import 'package:bronze_mirror/immerse/view/image_draw_screen.dart';

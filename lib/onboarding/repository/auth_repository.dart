@@ -4,10 +4,9 @@ import 'package:retrofit/retrofit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../common/provider/dio_provider.dart';
 import '../provider/secure_storage.dart';
-
 part 'auth_repository.g.dart';
 
-/// 실제 Provider에서 사용할 Repository 클래스
+/// accessToken이 유효한지 검증하는 api 레포지토리
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
   final dio = ref.watch(dioProvider);
   final storage = ref.watch(secureStorageProvider);
@@ -15,7 +14,6 @@ final authRepositoryProvider = Provider<AuthRepository>((ref) {
   return AuthRepositoryWithToken(dio, storage);
 });
 
-/// Retrofit 인터페이스 정의
 @RestApi()
 abstract class AuthRepository {
   factory AuthRepository(Dio dio) = _AuthRepository;

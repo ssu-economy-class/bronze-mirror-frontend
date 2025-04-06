@@ -33,9 +33,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     try {
       await authRepo.validateToken();
       if (!mounted) return;
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const RootTab()),
-      );
+      Navigator.of(
+        context,
+      ).pushReplacement(MaterialPageRoute(builder: (_) => const RootTab()));
     } on DioException catch (e) {
       if (e.response?.statusCode == 403) {
         Navigator.of(context).pushReplacement(
@@ -70,7 +70,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           children: [
             const _Title(),
             SizedBox(height: height * 0.075),
-            const BronzeMirror(),
+            Hero(tag: 'MIRROR', child: const BronzeMirror()),
             SizedBox(height: height * 0.075),
           ],
         ),
@@ -86,11 +86,7 @@ class _Title extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       APP_NAME,
-      style: TextStyle(
-        fontFamily: 'Hambaksnow',
-        fontSize: 48,
-        color: LIGHT,
-      ),
+      style: TextStyle(fontFamily: 'Hambaksnow', fontSize: 48, color: LIGHT),
     );
   }
 }

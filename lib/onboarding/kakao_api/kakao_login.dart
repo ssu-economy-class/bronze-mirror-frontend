@@ -1,10 +1,14 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import '../../common/component/snack_bar.dart';
-import '../provider/login_provider.dart'; // 우리가 만든 provider
-import '../../common/view/root_tap.dart'; // 로그인 후 이동할 화면
+import '../../common/const/message.dart';
+import '../../common/view/root_tap.dart';
+import '../provider/secure_storage.dart';
+import '../repository/login_repository.dart';
+import '../view/register_screen.dart';
 
 Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
   try {
@@ -33,15 +37,30 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
     debugPrint('✅ Profile Image: $profileImageUrl');
 
     // accessToken 요청 + 저장
-    await ref.read(loginProvider(kakaoId.toString()).future);
+    final loginRepo = ref.read(loginRepositoryProvider);
+    final storage = ref.read(secureStorageProvider);
 
-    // 성공 → 메인 화면 이동
-    if (context.mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const RootTab()),
-      );
+    try {
+      final response = await loginRepo.login({"kakaoId": kakaoId});
+      await storage.write(key: "accessToken", value: response.accessToken);
+
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const RootTab()),
+        );
+      }
+    } on DioException catch (dioError) {
+      if (dioError.response?.statusCode == 403) {
+        if (context.mounted) {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => RegisterScreen()),
+          );
+        }
+      } else {
+        showSnackBar(context, LOGIN_ERROR);
+      }
     }
   } catch (error) {
-    showSnackBar(context, '사용자 정보를 가져오거나 로그인에 실패했습니다.');
+    showSnackBar(context, LOGIN_ERROR);
   }
 }
