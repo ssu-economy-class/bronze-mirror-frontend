@@ -8,7 +8,7 @@ part 'image_repository.g.dart';
 
 /// Image Repository Provider
 final imageRepositoryProvider = Provider<ImageRepository>((ref) {
-  final dio = ref.watch(dioProvider);
+  final dio = ref.watch(dioAuthProvider);
   return ImageRepository(dio);
 });
 

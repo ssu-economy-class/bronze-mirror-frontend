@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'common/provider/size_provider.dart';
-import 'onboarding/view/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

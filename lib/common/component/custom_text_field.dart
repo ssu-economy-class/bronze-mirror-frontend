@@ -36,10 +36,10 @@ class CustomTextField extends StatelessWidget {
               return TextFormField(
                 controller: controller,
                 validator: validator,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                style: SUB_TITLE_24.copyWith(color: Colors.black),
                 decoration: InputDecoration(
                   hintText: hintText,
-                  hintStyle: const TextStyle(color: Colors.grey),
+                  hintStyle: SUB_TITLE_19.copyWith(color: Colors.grey),
                   enabledBorder: isEmpty
                       ? const UnderlineInputBorder(borderSide: BorderSide(color: Colors.grey))
                       : const UnderlineInputBorder(

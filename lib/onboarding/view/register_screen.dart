@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../common/component/custom_text_field.dart';
 import '../model/kakao_register_model.dart';
+import '../provider/kakao_info_provider.dart';
 import '../provider/kakao_register_provider.dart';
 import '../utils/form.dart';
 
@@ -36,8 +37,23 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    /// 이름, 닉네임 초기값 설정
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final userInfo = ref.read(kakaoInfoProvider);
+      if (userInfo != null) {
+        nameController.text = userInfo.nickname;
+        nicknameController.text = userInfo.nickname;
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final height = ref.read(deviceHeightProvider);
+    final userInfo = ref.watch(kakaoInfoProvider);
 
     return Scaffold(
       backgroundColor: WHITE,
@@ -88,16 +104,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               final request = KakaoRegisterRequest(
-                                kakaoId: '3951856371',
+                                kakaoId: userInfo!.kakaoId,
                                 profileImage:
-                                    'https://k.kakaocdn.net/dn/orLz8/btsLL8x8njU/6reC37X4cF5Fruu3yBkFc0/img_640x640.jpg',
+                                    userInfo.profileImageUrl,
                                 name: nameController.text,
                                 nickname: nicknameController.text,
                                 birthdate: birthController.text,
                               );
-
-                              print('📦 요청 바디: ${request.toJson()}'); // ✅ 여기!
-
                               ref
                                   .read(kakaoRegisterProvider(request).future)
                                   .then((res) {

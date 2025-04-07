@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../model/image_generation_model.dart';
 import '../repository/image_repository.dart';
@@ -11,18 +10,16 @@ final imageGenerationProvider = StateNotifierProvider<ImageGenerationNotifier, A
 class ImageGenerationNotifier extends StateNotifier<AsyncValue<ImageGenerationResponse?>> {
   final ImageRepository repository;
 
-  ImageGenerationNotifier(this.repository) : super(const AsyncValue.data(null));
+  ImageGenerationNotifier(this.repository) : super(const AsyncValue.loading());
 
   /// 이미지 생성 요청
   Future<void> generateImage({
-    required String userId,
     required String imageUrl,
     required String prompt,
   }) async {
     state = const AsyncValue.loading();
     try {
       final request = ImageGenerationRequest(
-        userId: userId,
         imageUrl: imageUrl,
         prompt: prompt,
       );
@@ -34,5 +31,7 @@ class ImageGenerationNotifier extends StateNotifier<AsyncValue<ImageGenerationRe
       print(e);
     }
   }
-
+  void setError(Object error) {
+    state = AsyncValue.error(error, StackTrace.current);
+  }
 }

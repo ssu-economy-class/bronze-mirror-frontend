@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import '../../common/component/snack_bar.dart';
 import '../../common/const/message.dart';
 import '../../common/view/root_tap.dart';
+import '../provider/kakao_info_provider.dart';
 import '../provider/secure_storage.dart';
 import '../repository/login_repository.dart';
 import '../view/register_screen.dart';
@@ -28,7 +31,7 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
     // 사용자 정보 요청
     User user = await UserApi.instance.me();
 
-    final kakaoId = user.id;
+    final kakaoId = user.id.toString();
     final nickname = user.kakaoAccount?.profile?.nickname;
     final profileImageUrl = user.kakaoAccount?.profile?.profileImageUrl;
 
@@ -44,6 +47,8 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
       final response = await loginRepo.login({"kakaoId": kakaoId});
       await storage.write(key: "accessToken", value: response.accessToken);
 
+      print(response.accessToken);
+
       if (context.mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const RootTab()),
@@ -52,6 +57,12 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
     } on DioException catch (dioError) {
       if (dioError.response?.statusCode == 403) {
         if (context.mounted) {
+          // 회원가입이기 때문에 카카오정보 provider에 임시 저장
+          ref.read(kakaoInfoProvider.notifier).state = KakaoUserInfo(
+            kakaoId: kakaoId.toString(),
+            nickname: nickname.toString(),
+            profileImageUrl: profileImageUrl.toString(),
+          );
           Navigator.of(context).push(
             MaterialPageRoute(builder: (_) => RegisterScreen()),
           );

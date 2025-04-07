@@ -9,7 +9,6 @@ part of 'image_generation_model.dart';
 ImageGenerationRequest _$ImageGenerationRequestFromJson(
   Map<String, dynamic> json,
 ) => ImageGenerationRequest(
-  userId: json['userId'] as String,
   imageUrl: json['imageUrl'] as String,
   prompt: json['prompt'] as String,
 );
@@ -17,7 +16,6 @@ ImageGenerationRequest _$ImageGenerationRequestFromJson(
 Map<String, dynamic> _$ImageGenerationRequestToJson(
   ImageGenerationRequest instance,
 ) => <String, dynamic>{
-  'userId': instance.userId,
   'imageUrl': instance.imageUrl,
   'prompt': instance.prompt,
 };

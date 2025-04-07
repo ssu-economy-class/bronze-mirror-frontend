@@ -6,6 +6,7 @@ import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import '../provider/image_generation_provider.dart';
 import 'mirror_screen.dart';
 import '../utils/camera.dart';
 
@@ -27,10 +28,9 @@ class FinalImageViewScreen extends StatelessWidget {
             SizedBox(height: 64),
             WideButton(
               onPressed:
-                  () => Navigator.push(
+                  () => Navigator.of(
                     context,
-                    MaterialPageRoute(builder: (_) => MirrorScreen()),
-                  ),
+                  ).push(MaterialPageRoute(builder: (_) => MirrorScreen())),
               text: 'Submit',
             ),
             SizedBox(height: 8),
@@ -81,11 +81,11 @@ class RollbackText extends StatelessWidget {
     return GestureDetector(
       onTap:
           () => pickImage(
-        imageProvider: finalImageProvider,
-        source: ImageSource.camera,
-        nextScreen: FinalImageViewScreen(),
-        context: context,
-      ),
+            imageProvider: finalImageProvider,
+            source: ImageSource.camera,
+            nextScreen: FinalImageViewScreen(),
+            context: context,
+          ),
       child: Text(
         'Take another photo',
         style: BODY_MID.copyWith(
@@ -97,4 +97,3 @@ class RollbackText extends StatelessWidget {
     );
   }
 }
-

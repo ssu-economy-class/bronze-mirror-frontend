@@ -4,12 +4,10 @@ part 'image_generation_model.g.dart';
 /// 요청 모델
 @JsonSerializable()
 class ImageGenerationRequest {
-  final String userId;
   final String imageUrl;
   final String prompt;
 
   ImageGenerationRequest({
-    required this.userId,
     required this.imageUrl,
     required this.prompt,
   });
