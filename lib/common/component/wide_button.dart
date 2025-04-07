@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class WideButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String text;
-  const WideButton({super.key, required this.onPressed, required this.text});
+  final bool isActive;
+  const WideButton({super.key, this.isActive = true, required this.onPressed, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +15,9 @@ class WideButton extends StatelessWidget {
         width: double.infinity,
         height: 52,
         child: ElevatedButton(
-          onPressed: onPressed,
+          onPressed: isActive ? onPressed : ()=>{},
           style: ElevatedButton.styleFrom(
-            backgroundColor: PRIMARY_100,
+            backgroundColor: isActive ? PRIMARY_100 : Color(0XFFC0C0C0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),

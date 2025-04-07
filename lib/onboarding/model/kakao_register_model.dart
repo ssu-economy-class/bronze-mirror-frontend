@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../utils/date.dart';
+
 part 'kakao_register_model.g.dart';
 
 /// 요청 모델
@@ -9,6 +11,7 @@ class KakaoRegisterRequest {
   final String profileImage;
   final String name;
   final String nickname;
+  @JsonKey(toJson: DateUtils.toServerDate)
   final String birthdate;
 
   KakaoRegisterRequest({

@@ -23,7 +23,7 @@ Map<String, dynamic> _$KakaoRegisterRequestToJson(
   'profileImage': instance.profileImage,
   'name': instance.name,
   'nickname': instance.nickname,
-  'birthdate': instance.birthdate,
+  'birthdate': DateUtils.toServerDate(instance.birthdate),
 };
 
 KakaoRegisterResponse _$KakaoRegisterResponseFromJson(
