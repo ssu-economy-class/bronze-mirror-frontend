@@ -1,14 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final kakaoInfoProvider = StateProvider<KakaoUserInfo?>((ref) => null);
+final clientInfoProvider = StateProvider<ClientUserInfo?>((ref) => null);
 
-class KakaoUserInfo {
-  final String kakaoId;
+class ClientUserInfo {
+  final String clientId;
   final String nickname;
   final String profileImageUrl;
 
-  KakaoUserInfo({
-    required this.kakaoId,
+  ClientUserInfo({
+    required this.clientId,
     required this.nickname,
     required this.profileImageUrl,
   });

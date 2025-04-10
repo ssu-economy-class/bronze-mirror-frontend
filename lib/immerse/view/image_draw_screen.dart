@@ -9,6 +9,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../common/api/firebase_analytics.dart';
 import '../component/custom_slider.dart';
 import '../component/button/custom_icon_button.dart';
 import '../provider/opacity_provider.dart';
@@ -33,11 +34,11 @@ class _ImageDrawScreenState extends ConsumerState<ImageDrawScreen> {
   Offset _offset = Offset.zero;
   double _rotation = 0.0;
   double _initialRotation = 0.0;
-  bool _isMultiTouch = false;
 
   @override
   void initState() {
     super.initState();
+    logScreenView(name: 'ImageDrawScreen');
     _setupCamera();
   }
 

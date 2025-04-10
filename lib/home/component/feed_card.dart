@@ -1,4 +1,7 @@
+import 'package:bronze_mirror/common/repository/image_delete_repository.dart';
+import 'package:bronze_mirror/user/provider/user_images_provider.dart';
 import 'package:flutter/material.dart' hide DateUtils;
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:pie_menu/pie_menu.dart';
@@ -7,6 +10,7 @@ import '../../common/style/design_system.dart';
 import '../../onboarding/utils/date.dart';
 import '../../user/component/custom_avatar.dart';
 import '../model/feed_images_model.dart';
+import '../provider/feed_images_provider.dart';
 import '../utils/image.dart';
 import 'custom_pie.dart';
 
@@ -50,37 +54,7 @@ class FeedCard extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   children: [
                     Positioned(child: _Profile(image: image)),
-                    Positioned(
-                      right:4,
-                      child: PieMenu(
-                        actions: [
-                          customPieAction(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                            },
-                          ),
-                          customPieAction(
-                            icon: const Icon(Icons.share),
-                            onPressed: () => shareImage(image.url),
-                          ),
-                          customPieAction(
-                            icon: const Icon(Icons.download_rounded),
-                            onPressed: () => downloadAndSaveImage(context, image.url),
-                          ),
-                        ],
-                        child: Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.transparent,
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/icon/list.svg',
-                            height: 20.0,
-                          ),
-                        ),
-                      )
-                    ),
+                    Positioned(right: 4, child: _CustomPie(image: image)),
                   ],
                 ),
               ),
@@ -126,6 +100,46 @@ class _Profile extends StatelessWidget {
   }
 }
 
+class _CustomPie extends ConsumerWidget {
+  final FeedImage image;
+
+  const _CustomPie({required this.image, super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    return PieMenu(
+      actions: [
+        customPieAction(
+          icon: const Icon(Icons.delete),
+          onPressed: () async{
+            await ref.watch(ImageDeleteRepositoryProvider).deleteImage(image.id.toString());
+            await ref.read(feedImagesProvider.notifier).fetchImages(page: 0);
+            await ref.read(userImagesProvider.notifier).getImages();
+          },
+        ),
+        customPieAction(
+          icon: const Icon(Icons.share),
+          onPressed: () => shareImage(image.url),
+        ),
+        customPieAction(
+          icon: const Icon(Icons.download_rounded),
+          onPressed: () => downloadAndSaveImage(context, image.url),
+        ),
+      ],
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.transparent,
+        ),
+        child: SvgPicture.asset('assets/icon/list.svg', height: 20.0),
+      ),
+    );
+  }
+}
+
+// 피드 카드 로딩 스켈레톤 컴포넌트
 class FeedCardLoading extends StatelessWidget {
   const FeedCardLoading({super.key});
 

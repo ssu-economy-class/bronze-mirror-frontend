@@ -1,4 +1,4 @@
-import 'package:bronze_mirror/common/provider/dio_provider.dart';
+import 'package:bronze_mirror/common/api/dio_provider.dart';
 import 'package:bronze_mirror/env.dart';
 import 'package:bronze_mirror/firebase_options.dart';
 import 'package:bronze_mirror/onboarding/view/splash_screen.dart';

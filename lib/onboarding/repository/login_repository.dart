@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../common/provider/dio_provider.dart';
+import '../../common/api/dio_provider.dart';
 part 'login_repository.g.dart';
 
 /// 로그인 요청 api 레포지토리

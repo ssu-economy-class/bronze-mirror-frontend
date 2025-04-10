@@ -5,12 +5,15 @@ import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/api/firebase_analytics.dart';
+
 // 서비스 설명서 스크린
 class GuideScreen extends ConsumerWidget {
   const GuideScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    logScreenView(name: 'GuideScreen');
     final double height = ref.read(deviceHeightProvider);
     return ImmerseLayout(
       title: 'Select',

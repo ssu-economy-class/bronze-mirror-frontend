@@ -1,3 +1,4 @@
+import 'package:bronze_mirror/common/api/firebase_analytics.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -5,12 +6,19 @@ import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import '../../common/component/snack_bar.dart';
 import '../../common/const/message.dart';
 import '../../common/view/root_tap.dart';
-import '../provider/kakao_info_provider.dart';
+import '../provider/login_info_provider.dart';
 import '../provider/secure_storage.dart';
 import '../repository/login_repository.dart';
 import '../view/register_screen.dart';
 
 Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
+  logEvent(
+    name: '버튼 클릭',
+    parameters: {
+      'screen': 'login',
+      'button': 'kakao',
+    },
+  );
   final isLoggingIn = ref.read(isLoggingInProvider);
   if (isLoggingIn) return;
 
@@ -38,10 +46,6 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
     final nickname = user.kakaoAccount?.profile?.nickname;
     final profileImageUrl = user.kakaoAccount?.profile?.profileImageUrl;
 
-    debugPrint('✅ Kakao ID: $kakaoId');
-    debugPrint('✅ Nickname: $nickname');
-    debugPrint('✅ Profile Image: $profileImageUrl');
-
     final loginRepo = ref.read(loginRepositoryProvider);
     final storage = ref.read(secureStorageProvider);
 
@@ -57,13 +61,10 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
         );
       }
     } on DioException catch (e) {
-      print('❗ Dio error status: ${e.response?.statusCode}');
-      print('❗ Dio error message: ${e.message}');
-      print('❗ Dio response data: ${e.response?.data}');
       if (e.response?.statusCode == 401) {
         if (context.mounted) {
-          ref.read(kakaoInfoProvider.notifier).state = KakaoUserInfo(
-            kakaoId: kakaoId,
+          ref.read(clientInfoProvider.notifier).state = ClientUserInfo(
+            clientId: kakaoId,
             nickname: nickname ?? '',
             profileImageUrl: profileImageUrl ?? '',
           );

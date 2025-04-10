@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pie_menu/pie_menu.dart';
+import '../../common/api/firebase_analytics.dart';
 import '../layout/grid_gallery.dart';
 import '../provider/user_images_provider.dart';
 
@@ -24,6 +25,7 @@ class _UserScreenState extends ConsumerState<UserScreen> {
   @override
   void initState() {
     super.initState();
+    logScreenView(name: 'UserScreen');
     // 처음 진입 시 자동 API 요청
     Future.microtask(() async {
       await ref.read(userInfoStateProvider.notifier).getUserInfo();
@@ -34,6 +36,12 @@ class _UserScreenState extends ConsumerState<UserScreen> {
   Future<void> onRefresh() async {
     await ref.read(userInfoStateProvider.notifier).getUserInfo();
     await ref.read(userImagesProvider.notifier).getImages();
+    logEvent(
+      name: '리프레쉬',
+      parameters: {
+        'screen': 'user',
+      },
+    );
   }
 
   @override

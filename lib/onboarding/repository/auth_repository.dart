@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../../common/provider/dio_provider.dart';
+import '../../common/api/dio_provider.dart';
 import '../provider/secure_storage.dart';
 part 'auth_repository.g.dart';
 

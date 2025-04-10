@@ -8,6 +8,7 @@ import 'package:bronze_mirror/immerse/const/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../common/api/firebase_analytics.dart';
 import '../../common/provider/file_upload_provider.dart';
 import '../provider/image_generation_provider.dart';
 import '../provider/image_picker_provider.dart';
@@ -23,6 +24,7 @@ class _MirrorScreenState extends ConsumerState<MirrorScreen> {
   @override
   void initState() {
     super.initState();
+    logScreenView(name: 'MirrorScreen');
     Future.microtask(() async {
       final XFile? finalImage = ref.read(finalImageProvider);
 
@@ -40,9 +42,20 @@ class _MirrorScreenState extends ConsumerState<MirrorScreen> {
             imageUrl: imageUrl,
             prompt: PROMPT,
           );
+          logEvent(
+            name: '이미지 생성',
+            parameters: {
+              'screen': 'mirror',
+            },
+          );
         } catch (e) {
           if (!mounted) return;
-          print(e);
+          logEvent(
+            name: '이미지 생성 에러',
+            parameters: {
+              'screen': 'mirror',
+            },
+          );
           ref.read(imageGenerationProvider.notifier).setError(e);
         }
       }

@@ -2,7 +2,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
-import '../../common/provider/dio_provider.dart';
+import '../../common/api/dio_provider.dart';
 import '../model/user_info_model.dart';
 
 part 'user_info_repository.g.dart';

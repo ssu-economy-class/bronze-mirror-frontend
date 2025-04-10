@@ -6,7 +6,7 @@ import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import '../provider/image_generation_provider.dart';
+import '../../common/api/firebase_analytics.dart';
 import 'mirror_screen.dart';
 import '../utils/camera.dart';
 
@@ -16,6 +16,7 @@ class FinalImageViewScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logScreenView(name: 'FinalImageScreen');
     return Scaffold(
       body: Container(
         height: double.infinity,

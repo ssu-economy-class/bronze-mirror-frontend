@@ -1,21 +1,22 @@
 import 'package:bronze_mirror/common/component/bronze_mirror.dart';
 import 'package:bronze_mirror/common/const/common_data.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
-import 'package:bronze_mirror/onboarding/component/KakaoButton.dart';
-import 'package:bronze_mirror/onboarding/kakao_api/kakao_login.dart';
+import 'package:bronze_mirror/onboarding/component/login_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/api/firebase_analytics.dart';
 import '../../common/layout/default_layout.dart';
-import '../provider/kakao_info_provider.dart';
+import '../login_api/kakao_login.dart';
+import '../provider/login_info_provider.dart';
 
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    logScreenView(name: 'FeedScreen');
     double deviceHeight = MediaQuery.of(context).size.height;
-    final isLoggingIn = ref.watch(isLoggingInProvider);
     return DefaultLayout(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,10 +26,9 @@ class LoginScreen extends ConsumerWidget {
           SizedBox(height: deviceHeight * 0.075),
           Hero(tag: 'MIRROR', child: BronzeMirror()),
           SizedBox(height: deviceHeight * 0.2),
-          KakaoButton(
-            onClick:
-                isLoggingIn ? () => {} : () => loginWithKakao(context, ref),
-          ),
+          KakaoButton(context, ref),
+          SizedBox(height: 12),
+          DiscordButton(context, ref),
         ],
       ),
     );

@@ -6,9 +6,10 @@ import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/common/view/root_tap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../common/api/firebase_analytics.dart';
 import '../../common/component/custom_text_field.dart';
 import '../model/kakao_register_model.dart';
-import '../provider/kakao_info_provider.dart';
+import '../provider/login_info_provider.dart';
 import '../provider/kakao_register_provider.dart';
 import '../utils/form.dart';
 
@@ -41,9 +42,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     // TODO: implement initState
     super.initState();
 
+    logScreenView(name: 'RegisterScreen');
+
     /// 이름, 닉네임 초기값 설정
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final userInfo = ref.read(kakaoInfoProvider);
+      final userInfo = ref.read(clientInfoProvider);
       if (userInfo != null) {
         nameController.text = userInfo.nickname;
         nicknameController.text = userInfo.nickname;
@@ -54,7 +57,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final height = ref.read(deviceHeightProvider);
-    final userInfo = ref.watch(kakaoInfoProvider);
+    final userInfo = ref.watch(clientInfoProvider);
 
     return Scaffold(
       backgroundColor: WHITE,
@@ -103,19 +106,26 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           text: '회원가입',
                           isActive: isActive,
                           onPressed: () {
+                            logEvent(
+                              name: '버튼 클릭',
+                              parameters: {
+                                'screen': 'register',
+                                'button': 'submit',
+                              },
+                            );
                             if (_formKey.currentState!.validate()) {
                               final request = KakaoRegisterRequest(
-                                kakaoId: userInfo!.kakaoId,
+                                kakaoId: userInfo!.clientId,
                                 profileImage: userInfo.profileImageUrl,
                                 name: nameController.text,
                                 nickname: nicknameController.text,
                                 birthdate: birthController.text,
                               );
-                              print(userInfo!.kakaoId);
-                              print(userInfo.profileImageUrl);
-                              print(nameController.text);
-                              print(nicknameController.text);
-                              print(birthController.text);
+                              print(request.nickname);
+                              print(request.profileImage);
+                              print(request.name);
+                              print(request.birthdate);
+                              print(request.kakaoId);
                               ref
                                   .read(kakaoRegisterProvider(request).future)
                                   .then((res) {
@@ -127,8 +137,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                     );
                                   })
                                   .catchError((e, stackTrace) {
-                                    print('❌ 오류 발생: $e');
-                                    print('🪵 스택트레이스: $stackTrace');
+                                    logEvent(
+                                      name: '에러 발생',
+                                      parameters: {
+                                        'screen': 'register',
+                                        'button': 'submit',
+                                      },
+                                    );
                                     showSnackBar(context, SERVER_ERROR);
                                   });
                             }

@@ -7,6 +7,7 @@ import 'package:bronze_mirror/common/view/root_tap.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../common/api/firebase_analytics.dart';
 import '../../common/component/snack_bar.dart';
 import '../repository/auth_repository.dart';
 import 'login_screen.dart';
@@ -25,6 +26,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   void initState() {
     super.initState();
     _checkToken();
+    logScreenView(name: 'SplashScreen');
   }
 
   Future<void> _checkToken() async {

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:pie_menu/pie_menu.dart';
+import '../../common/api/firebase_analytics.dart';
 import '../component/feed_card.dart';
 import '../provider/feed_images_provider.dart';
 
@@ -22,6 +23,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    logScreenView(name: 'HomeScreen');
+
     _scrollController.addListener(_onScroll);
 
     // ✅ 진입 시마다 새로운 데이터 요청 (캐시가 있더라도)
@@ -42,6 +46,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> onRefresh() async {
     await ref.read(feedImagesProvider.notifier).fetchImages(page: 0);
+    logEvent(
+      name: '리프레쉬',
+      parameters: {
+        'screen': 'home',
+      },
+    );
   }
 
   @override

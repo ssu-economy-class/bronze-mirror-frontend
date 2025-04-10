@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../common/api/firebase_analytics.dart';
+
 // imagePicker로 불러온 이미지를 보기 위한 스크린
 class ImageViewScreen extends StatelessWidget {
   const ImageViewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    logScreenView(name: 'ImageViewScreen');
     return ImmerseLayout(
       title: 'Select',
       color: WHITE,

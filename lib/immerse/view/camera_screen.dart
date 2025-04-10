@@ -5,6 +5,7 @@ import 'package:bronze_mirror/immerse/provider/image_picker_provider.dart';
 import 'package:bronze_mirror/immerse/view/image_view_screen.dart';
 import 'package:flutter/material.dart' hide IconButton;
 import 'package:image_picker/image_picker.dart';
+import '../../common/api/firebase_analytics.dart';
 import '../utils/camera.dart';
 
 // 기기의 카메라, 갤러리와 연동하는 스크린입니다.
@@ -18,6 +19,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
+    logScreenView(name: 'CameraScreen');
     return DefaultLayout(
       child: Container(
         width: double.infinity,

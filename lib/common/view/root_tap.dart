@@ -8,6 +8,8 @@ import 'package:bronze_mirror/user/view/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../api/firebase_analytics.dart';
+
 class RootTab extends ConsumerStatefulWidget {
   const RootTab({Key? key}) : super(key: key);
 
@@ -43,6 +45,9 @@ class _RootTabState extends ConsumerState<RootTab>
     setState(() {
       index = controller.index;
     });
+    logEvent(
+      name: '화면 전환',
+    );
   }
 
   @override

@@ -1,8 +1,10 @@
 import 'package:bronze_mirror/common/style/design_system.dart';
+import 'package:bronze_mirror/onboarding/provider/secure_storage.dart';
 import 'package:bronze_mirror/onboarding/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/api/firebase_analytics.dart';
 import '../../onboarding/repository/logout_repository.dart';
 
 class SettingScreen extends StatelessWidget {
@@ -10,6 +12,7 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logScreenView(name: 'SettingScreen');
     Color bgColor = WHITE;
     return Scaffold(
       appBar: AppBar(
@@ -39,6 +42,8 @@ class _LogoutButton extends ConsumerWidget {
       onPressed: () async {
           final repository = ref.read(logoutRepositoryProvider);
           await repository.logout();
+          final storage = ref.read(secureStorageProvider);
+          storage.deleteAll();
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> LoginScreen()));
       },
       style: ButtonStyle(

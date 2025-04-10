@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 import '../model/kakao_register_model.dart';
-import '../../common/provider/dio_provider.dart';
+import '../../common/api/dio_provider.dart';
 
 part 'register_repository.g.dart';
 
