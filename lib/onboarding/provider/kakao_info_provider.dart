@@ -13,3 +13,5 @@ class KakaoUserInfo {
     required this.profileImageUrl,
   });
 }
+
+final isLoggingInProvider = StateProvider<bool>((ref) => false);

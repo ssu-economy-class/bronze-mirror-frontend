@@ -40,6 +40,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
     /// 이름, 닉네임 초기값 설정
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final userInfo = ref.read(kakaoInfoProvider);
@@ -105,12 +106,16 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             if (_formKey.currentState!.validate()) {
                               final request = KakaoRegisterRequest(
                                 kakaoId: userInfo!.kakaoId,
-                                profileImage:
-                                    userInfo.profileImageUrl,
+                                profileImage: userInfo.profileImageUrl,
                                 name: nameController.text,
                                 nickname: nicknameController.text,
                                 birthdate: birthController.text,
                               );
+                              print(userInfo!.kakaoId);
+                              print(userInfo.profileImageUrl);
+                              print(nameController.text);
+                              print(nicknameController.text);
+                              print(birthController.text);
                               ref
                                   .read(kakaoRegisterProvider(request).future)
                                   .then((res) {
@@ -121,7 +126,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                                       (route) => false,
                                     );
                                   })
-                                  .catchError((e) {
+                                  .catchError((e, stackTrace) {
+                                    print('❌ 오류 발생: $e');
+                                    print('🪵 스택트레이스: $stackTrace');
                                     showSnackBar(context, SERVER_ERROR);
                                   });
                             }

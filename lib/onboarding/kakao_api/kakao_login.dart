@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -14,15 +11,21 @@ import '../repository/login_repository.dart';
 import '../view/register_screen.dart';
 
 Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
+  final isLoggingIn = ref.read(isLoggingInProvider);
+  if (isLoggingIn) return;
+
+  ref.read(isLoggingInProvider.notifier).state = true;
+
   try {
     // 카카오톡 앱 로그인 시도
     await UserApi.instance.loginWithKakaoTalk();
   } catch (error) {
-    // 카카오톡 앱 로그인 실패 -> 계정 로그인 시도
+    // 앱 로그인 실패 -> 계정 로그인
     try {
       await UserApi.instance.loginWithKakaoAccount();
     } catch (error) {
       showSnackBar(context, '카카오톡 로그인 실패. 다시 시도해주세요.');
+      ref.read(isLoggingInProvider.notifier).state = false;
       return;
     }
   }
@@ -39,7 +42,6 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
     debugPrint('✅ Nickname: $nickname');
     debugPrint('✅ Profile Image: $profileImageUrl');
 
-    // accessToken 요청 + 저장
     final loginRepo = ref.read(loginRepositoryProvider);
     final storage = ref.read(secureStorageProvider);
 
@@ -54,17 +56,19 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
           MaterialPageRoute(builder: (_) => const RootTab()),
         );
       }
-    } on DioException catch (dioError) {
-      if (dioError.response?.statusCode == 403) {
+    } on DioException catch (e) {
+      print('❗ Dio error status: ${e.response?.statusCode}');
+      print('❗ Dio error message: ${e.message}');
+      print('❗ Dio response data: ${e.response?.data}');
+      if (e.response?.statusCode == 401) {
         if (context.mounted) {
-          // 회원가입이기 때문에 카카오정보 provider에 임시 저장
           ref.read(kakaoInfoProvider.notifier).state = KakaoUserInfo(
-            kakaoId: kakaoId.toString(),
-            nickname: nickname.toString(),
-            profileImageUrl: profileImageUrl.toString(),
+            kakaoId: kakaoId,
+            nickname: nickname ?? '',
+            profileImageUrl: profileImageUrl ?? '',
           );
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => RegisterScreen()),
+            MaterialPageRoute(builder: (_) => const RegisterScreen()),
           );
         }
       } else {
@@ -72,6 +76,9 @@ Future<void> loginWithKakao(BuildContext context, WidgetRef ref) async {
       }
     }
   } catch (error) {
+    print(error);
     showSnackBar(context, LOGIN_ERROR);
+  } finally {
+    ref.read(isLoggingInProvider.notifier).state = false;
   }
 }

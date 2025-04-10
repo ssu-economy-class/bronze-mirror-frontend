@@ -1,14 +1,17 @@
+import 'package:bronze_mirror/common/provider/size_provider.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/common/component/wide_button.dart';
 import 'package:bronze_mirror/immerse/layout/immerse_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 서비스 설명서 스크린
-class GuideScreen extends StatelessWidget {
+class GuideScreen extends ConsumerWidget {
   const GuideScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final double height = ref.read(deviceHeightProvider);
     return ImmerseLayout(
       title: 'Select',
       color: Colors.black,
@@ -21,8 +24,8 @@ class GuideScreen extends StatelessWidget {
           children: [
             _ImageSection(),
             _ManualSection(),
-            WideButton(onPressed: () => Navigator.pop, text: 'Start to Draw'),
-            SizedBox(height: 88),
+            WideButton(onPressed: () => Navigator.of(context).pop(), text: 'Start to Draw'),
+            SizedBox(height: height * 0.08),
           ],
         ),
       ),
@@ -30,17 +33,17 @@ class GuideScreen extends StatelessWidget {
   }
 }
 
-class _ImageSection extends StatelessWidget {
+class _ImageSection extends ConsumerWidget {
   const _ImageSection({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final double height = ref.read(deviceHeightProvider);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40.0),
-      child: Container(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height * 0.4,
-        color: Colors.grey,
+      child: Image.asset(
+        'assets/image/guide.jpg',
+        height: height * 0.5,
       ),
     );
   }

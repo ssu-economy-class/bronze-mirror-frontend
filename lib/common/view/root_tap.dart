@@ -2,7 +2,9 @@ import 'package:bronze_mirror/common/const/common_data.dart';
 import 'package:bronze_mirror/common/layout/default_layout.dart';
 import 'package:bronze_mirror/common/provider/size_provider.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
+import 'package:bronze_mirror/home/view/home_screen.dart';
 import 'package:bronze_mirror/immerse/view/camera_screen.dart';
+import 'package:bronze_mirror/user/view/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +20,7 @@ class _RootTabState extends ConsumerState<RootTab>
   late TabController controller;
 
   int index = 0;
-  int screenNum = 5;
+  int screenNum = 3;
 
   @override
   void initState() {
@@ -59,8 +61,8 @@ class _RootTabState extends ConsumerState<RootTab>
             BottomNavigationBar(
               elevation: 0,
               backgroundColor: Colors.white,
-              selectedItemColor: PRIMARY_100,
-              unselectedItemColor: Colors.black,
+              selectedItemColor: PRIMARY_400,
+              unselectedItemColor: Color(0XFFB9B9B9),
               selectedFontSize: 10.0,
               unselectedFontSize: 10.0,
               type: BottomNavigationBarType.fixed,
@@ -71,7 +73,11 @@ class _RootTabState extends ConsumerState<RootTab>
               items: List.generate(
                 screenNum,
                 (index) => BottomNavigationBarItem(
-                  icon: BOTTOMBAR_ICONS[index],
+                  icon: Image.asset(
+                    BOTTOMBAR_ICONS[index],
+                    width: 24,
+                    height: 24,
+                  ),
                   label: SCREEN_NAMES[index],
                 ),
               ),
@@ -84,17 +90,18 @@ class _RootTabState extends ConsumerState<RootTab>
         physics: NeverScrollableScrollPhysics(),
         controller: controller,
         children: [
-          Center(child: Container(child: Text('Home'))),
-          Center(child: Container(child: Text('Map'))),
+          HomeScreen(),
+          // Center(child: Container(child: Text('Map'))),
           Center(child: Container(child: Text('Immerse'))),
-          Center(child: Container(child: Text('Calendar'))),
-          Center(child: Container(child: Text('User'))),
+          // Center(child: Container(child: Text('Calendar'))),
+          UserScreen(),
         ],
       ),
     );
   }
 }
 
+/// 가운데 Immerse Screen으로 가는 버튼입니다.
 class _ImmerseButton extends ConsumerWidget {
   const _ImmerseButton({super.key});
 
@@ -107,14 +114,18 @@ class _ImmerseButton extends ConsumerWidget {
             context,
           ).push(MaterialPageRoute(builder: (_) => CameraScreen())),
       child: Container(
-        width: width * 0.2,
+        width: width * 0.25,
         height: 60,
         color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.add_circle_outline_outlined),
-            Text('Immerse', style: TextStyle(fontSize: 10.0)),
+            Image.asset(
+              BOTTOMBAR_ICONS[1],
+              width: 24,
+              height: 24,
+            ),
+            Text('Immerse', style: TextStyle(fontSize: 10.0, color: Color(0XFFB9B9B9))),
           ],
         ),
       ),

@@ -29,13 +29,13 @@ class KakaoRegisterRequest {
 @JsonSerializable()
 class KakaoRegisterResponse {
   final String message;
-  final bool isSuccess;
+  final bool success;
   final KakaoRegisterResponseData data;
-  final String code;
+  final int code;
 
   KakaoRegisterResponse({
     required this.message,
-    required this.isSuccess,
+    required this.success,
     required this.data,
     required this.code,
   });

@@ -1,6 +1,7 @@
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/immerse/view/guide_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 // immerse screen의 공통 레이아웃입니다.
 class ImmerseLayout extends StatelessWidget {
@@ -49,10 +50,10 @@ class ImmerseLayout extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(right : 24),
                 child: SizedBox(
-                  width: 36.0,
-                  height: 36.0,
+                  width: 38.0,
+                  height: 38.0,
                   child: IconButton(
-                    icon: Text('i', style: TextStyle(color:WHITE, fontSize: 16.0),),
+                    icon: SvgPicture.asset('assets/icon/i.svg', height: 32.0),
                     onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => GuideScreen())),
                     style: IconButton.styleFrom(
                       backgroundColor: PRIMARY,

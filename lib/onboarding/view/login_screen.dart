@@ -6,14 +6,18 @@ import 'package:bronze_mirror/onboarding/kakao_api/kakao_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../common/layout/default_layout.dart';
+import '../provider/kakao_info_provider.dart';
+
 class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     double deviceHeight = MediaQuery.of(context).size.height;
-    return Scaffold(
-      body: Column(
+    final isLoggingIn = ref.watch(isLoggingInProvider);
+    return DefaultLayout(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -21,7 +25,10 @@ class LoginScreen extends ConsumerWidget {
           SizedBox(height: deviceHeight * 0.075),
           Hero(tag: 'MIRROR', child: BronzeMirror()),
           SizedBox(height: deviceHeight * 0.2),
-          KakaoButton(onClick: () => loginWithKakao(context, ref)),
+          KakaoButton(
+            onClick:
+                isLoggingIn ? () => {} : () => loginWithKakao(context, ref),
+          ),
         ],
       ),
     );

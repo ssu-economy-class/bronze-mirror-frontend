@@ -1,16 +1,17 @@
+import 'dart:io';
 import 'package:bronze_mirror/common/component/bronze_mirror.dart';
 import 'package:bronze_mirror/common/const/message.dart';
 import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/common/view/error_screen.dart';
 import 'package:bronze_mirror/common/view/root_tap.dart';
-import 'package:bronze_mirror/immerse/utils/firebase.dart';
+import 'package:bronze_mirror/immerse/const/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../common/provider/file_upload_provider.dart';
 import '../provider/image_generation_provider.dart';
 import '../provider/image_picker_provider.dart';
 
-// ai로 생성된 이미지를 보기 위한 예시 스크린
 class MirrorScreen extends ConsumerStatefulWidget {
   const MirrorScreen({Key? key}) : super(key: key);
 
@@ -19,32 +20,33 @@ class MirrorScreen extends ConsumerStatefulWidget {
 }
 
 class _MirrorScreenState extends ConsumerState<MirrorScreen> {
-  bool _hasRequested = false;
-
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      final XFile? finalImage = ref.read(finalImageProvider);
 
-    final XFile? finalImage = ref.read(finalImageProvider);
+      if (finalImage != null) {
+        try {
+          final file = File(finalImage.path);
+          print(file);
+          final imageUrl = await ref.read(fileUploadProvider).upload(file);
 
-    // 최초 1회만 요청
-    if (!_hasRequested && finalImage != null) {
-      _hasRequested = true;
+          if (!mounted) return;
 
-      uploadImageToFirebase(finalImage)
-          .then((imageUrl) {
-            ref
-                .read(imageGenerationProvider.notifier)
-                .generateImage(
-                  imageUrl: imageUrl,
-                  prompt:
-                      "Edit the portrait photo to change only the background color. Keep the person’s features, expression, and details intact. The new background should feature a gradient of warm colors, such as orange, pink, and purple, resembling a sunset. Ensure that the person remains the focal point of the image while the background complements the overall mood",
-                );
-          })
-          .catchError((error) {
-            ref.read(imageGenerationProvider.notifier).setError(error);
-          });
-    }
+          print(imageUrl);
+
+          ref.read(imageGenerationProvider.notifier).generateImage(
+            imageUrl: imageUrl,
+            prompt: PROMPT,
+          );
+        } catch (e) {
+          if (!mounted) return;
+          print(e);
+          ref.read(imageGenerationProvider.notifier).setError(e);
+        }
+      }
+    });
   }
 
   @override
@@ -58,37 +60,41 @@ class _MirrorScreenState extends ConsumerState<MirrorScreen> {
           loading: () => const MirrorLoadingScreen(),
           error: (error, _) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (_) => ErrorScreen(message: SERVER_ERROR),
-                ),
-              );
+              if (mounted) {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (_) => ErrorScreen(message: SERVER_ERROR),
+                  ),
+                );
+              }
             });
-            return null;
+            return const SizedBox.shrink();
           },
           data: (response) {
-            if (response == null) {
-              return null;
-            }
+            if (response == null) return const MirrorLoadingScreen();
+
             return GestureDetector(
-              onTap:
-                  () => Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(builder: (_) => RootTab()),
-                    (route) => false,
-                  ),
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (_) => RootTab()),
+                      (route) => false,
+                );
+              },
               child: Center(
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    ClipOval(
-                      child: Image.network(
-                        response.savedImageUrl,
-                        width: 290,
-                        height: 290,
-                        fit: BoxFit.cover,
+                    Hero(
+                      tag: response.savedImageUrl,
+                      child: ClipOval(
+                        child: Image.network(
+                          response.savedImageUrl,
+                          width: 290,
+                          height: 290,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                    // 2. 도넛 프레임
                     Image.asset(
                       'assets/image/mirror_frame.png',
                       width: 300,
@@ -104,6 +110,12 @@ class _MirrorScreenState extends ConsumerState<MirrorScreen> {
       ),
     );
   }
+  @override
+  void dispose() {
+    ref.invalidate(imageGenerationProvider);
+    super.dispose();
+  }
+
 }
 
 class MirrorLoadingScreen extends StatelessWidget {
@@ -111,11 +123,11 @@ class MirrorLoadingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(gradient: BACKGROUND),
-        child: Center(child: BronzeMirror()),
-      ),
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      decoration: BoxDecoration(gradient: BACKGROUND),
+      child: const Center(child: BronzeMirrorLoading()),
     );
   }
 }

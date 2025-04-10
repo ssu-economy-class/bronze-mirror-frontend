@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../common/provider/dio_provider.dart';
@@ -15,6 +15,10 @@ abstract class LoginRepository {
   factory LoginRepository(Dio dio) = _LoginRepository;
 
   @POST("/api/auth/af/login")
+  @Headers({
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+  })
   Future<AccessTokenResponse> login(@Body() Map<String, dynamic> body);
 }
 
@@ -24,6 +28,7 @@ class AccessTokenResponse {
   AccessTokenResponse({required this.accessToken});
 
   factory AccessTokenResponse.fromJson(Map<String, dynamic> json) {
-    return AccessTokenResponse(accessToken: json['accessToken']);
+    final data = json['data'];
+    return AccessTokenResponse(accessToken: data['accessToken']);
   }
 }

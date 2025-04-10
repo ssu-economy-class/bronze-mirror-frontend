@@ -28,6 +28,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   }
 
   Future<void> _checkToken() async {
+    Future.delayed(const Duration(milliseconds: 1000));
+    /// 테스트용 주석
+    // final storage = ref.read(secureStorageProvider);
+    // storage.write(key: 'accessToken', value: 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIzOTUxODU2MzcxIiwiaWF0IjoxNzQ0MTY0MTY5LCJleHAiOjE3NDQyNTA1Njl9.O4_aWpkXbvEw83N5M5pHnFMQ-D2oli-VamjpEWyj7v7lnbP-cm0nP5EFR50PaQz2tIpKSt9ldl5-lzOn2rWnIQ');
     final authRepo = ref.read(authRepositoryProvider);
 
     try {
@@ -68,7 +72,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const _Title(),
+            _Title(),
             SizedBox(height: height * 0.075),
             Hero(tag: 'MIRROR', child: const BronzeMirror()),
             SizedBox(height: height * 0.075),

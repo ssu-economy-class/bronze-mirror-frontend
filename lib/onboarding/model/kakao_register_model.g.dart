@@ -30,18 +30,18 @@ KakaoRegisterResponse _$KakaoRegisterResponseFromJson(
   Map<String, dynamic> json,
 ) => KakaoRegisterResponse(
   message: json['message'] as String,
-  isSuccess: json['isSuccess'] as bool,
+  success: json['success'] as bool,
   data: KakaoRegisterResponseData.fromJson(
     json['data'] as Map<String, dynamic>,
   ),
-  code: json['code'] as String,
+  code: (json['code'] as num).toInt(),
 );
 
 Map<String, dynamic> _$KakaoRegisterResponseToJson(
   KakaoRegisterResponse instance,
 ) => <String, dynamic>{
   'message': instance.message,
-  'isSuccess': instance.isSuccess,
+  'success': instance.success,
   'data': instance.data,
   'code': instance.code,
 };

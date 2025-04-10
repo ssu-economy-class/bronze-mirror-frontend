@@ -45,7 +45,8 @@ final dioAuthProvider = Provider<Dio>((ref) {
             (route) => false,
           );
         } else {
-          navigator?.pushAndRemoveUntil(
+          print(e.message);
+          navigator?.push(
             MaterialPageRoute(
               builder:
                   (_) => ErrorScreen(
@@ -55,7 +56,6 @@ final dioAuthProvider = Provider<Dio>((ref) {
                     },
                   ),
             ),
-            (route) => false,
           );
         }
         handler.next(e);

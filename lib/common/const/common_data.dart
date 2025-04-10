@@ -6,19 +6,19 @@ const APP_NAME = '청동거울'; // 앱명
 
 const SCREEN_NAMES = [
   'Home',
-  'Map',
+  // 'Map',
   'Immerse',
-  'Calendar',
+  // 'Calendar',
   'User',
 ]; // Appbar Title, BottomBar명
 
 const BOTTOMBAR_ICONS = [
-  Icon(Icons.home_outlined),
-  Icon(Icons.location_on_outlined),
-  Icon(Icons.add_circle_outline_outlined),
-  Icon(Icons.calendar_month_outlined),
-  Icon(Icons.person_outlined),
-]; // BottomNavigationBar Icons
+  'assets/icon/bottom_navigator_bar/home.png',
+  // 'assets/icon/bottom_navigator_bar/map.png',
+  'assets/icon/bottom_navigator_bar/immerse.png',
+  // 'assets/icon/bottom_navigator_bar/calendar.png',
+  'assets/icon/bottom_navigator_bar/user.png',
+];
 
 const ACCESS_TOKEN_KEY = 'ACCESS_TOKEN';
 const REFRESH_TOKEN_KEY = 'REFRESH_TOKEN';

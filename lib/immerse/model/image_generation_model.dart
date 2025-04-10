@@ -25,5 +25,5 @@ class ImageGenerationResponse {
   });
 
   factory ImageGenerationResponse.fromJson(Map<String, dynamic> json) =>
-      _$ImageGenerationResponseFromJson(json);
+      _$ImageGenerationResponseFromJson(json['data']);
 }
