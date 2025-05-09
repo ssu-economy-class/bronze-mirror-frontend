@@ -3,7 +3,6 @@ import 'package:bronze_mirror/onboarding/provider/secure_storage.dart';
 import 'package:bronze_mirror/onboarding/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../common/api/firebase_analytics.dart';
 import '../../onboarding/repository/logout_repository.dart';
 
@@ -41,7 +40,7 @@ class _LogoutButton extends ConsumerWidget {
     return TextButton(
       onPressed: () async {
           final repository = ref.read(logoutRepositoryProvider);
-          await repository.logout();
+          await repository.logout(ref);
           final storage = ref.read(secureStorageProvider);
           storage.deleteAll();
           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_)=> LoginScreen()));

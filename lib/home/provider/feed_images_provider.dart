@@ -9,18 +9,20 @@ final feedImagesProvider = StateNotifierProvider<FeedImagesNotifier, FeedImagesS
 
 class FeedImagesNotifier extends StateNotifier<FeedImagesState> {
   final FeedImagesRepository repository;
+  bool _isFetching = false;
 
   FeedImagesNotifier({required this.repository}) : super(FeedImagesState.loading()) {
-    fetchImages(); // 앱 처음 시작 시 요청
+    fetchImages(page: 0);
   }
 
-  // ✅ 기존 데이터 유지 + API 재요청
   Future<void> fetchImages({int page = 0}) async {
+    if (_isFetching) return;
+    _isFetching = true;
+
     try {
       final isInitial = state is FeedImagesLoading || state is FeedImagesError;
 
       if (isInitial) {
-        // 첫 진입 시엔 로딩 처리
         state = FeedImagesState.loading();
       }
 
@@ -34,7 +36,6 @@ class FeedImagesNotifier extends StateNotifier<FeedImagesState> {
           isLast: response.last,
         );
       } else {
-        // ✅ page=0일 땐 덮어쓰기
         state = FeedImagesData(
           images: response.content,
           page: response.page,
@@ -43,6 +44,8 @@ class FeedImagesNotifier extends StateNotifier<FeedImagesState> {
       }
     } catch (e) {
       state = FeedImagesState.error(e.toString());
+    } finally {
+      _isFetching = false;
     }
   }
 }

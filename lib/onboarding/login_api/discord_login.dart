@@ -67,6 +67,7 @@ Future<void> loginWithDiscord(BuildContext context, WidgetRef ref) async {
       debugPrint("📤 서버에 로그인 요청 중...");
       final response = await loginRepo.login({"kakaoId": discordId});
       await storage.write(key: "accessToken", value: response.accessToken);
+      print(response.accessToken);
       debugPrint("✅ 로그인 성공, 토큰 저장 완료");
 
       if (context.mounted) {

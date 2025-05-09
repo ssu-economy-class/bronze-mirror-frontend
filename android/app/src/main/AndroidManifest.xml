@@ -74,6 +74,17 @@
             </intent-filter>
         </activity>
 
+        <!-- Optional: camera intent 사용 시 필요 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
         <!-- Flutter 플러그인 등록을 위한 메타데이터 -->
         <meta-data
             android:name="flutterEmbedding"

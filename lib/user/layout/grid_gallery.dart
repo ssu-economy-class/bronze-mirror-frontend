@@ -1,11 +1,9 @@
-import 'package:bronze_mirror/common/style/design_system.dart';
 import 'package:bronze_mirror/user/provider/userInfoProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_skeleton_ui/flutter_skeleton_ui.dart';
 import 'package:pie_menu/pie_menu.dart';
-
-import '../../home/component/feed_card.dart';
+import '../../common/component/feed_card.dart';
 import '../../home/model/feed_images_model.dart';
 import '../model/user_images_model.dart';
 
@@ -20,14 +18,14 @@ class GridGallery extends ConsumerWidget {
 
     return userInfoState.when(
       data: (userInfo) {
-        if (userInfo == null) return const SliverToBoxAdapter(child: SizedBox());
-
+        if (userInfo == null) {
+          return const SliverToBoxAdapter(child: SizedBox());
+        }
         return SliverPadding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
           sliver: SliverGrid(
             delegate: SliverChildBuilderDelegate((context, index) {
               final image = imgs[index];
-
               return GestureDetector(
                 onTap: () {
                   showDialog(
@@ -35,7 +33,7 @@ class GridGallery extends ConsumerWidget {
                     builder: (BuildContext dialogContext) {
                       return GestureDetector(
                         onTap: () {
-                          Navigator.of(dialogContext).pop(); // 다이얼로그 닫기
+                          Navigator.of(dialogContext).pop();
                         },
                         child: PieCanvas(
                           theme: const PieTheme(
@@ -91,7 +89,10 @@ class GridGallery extends ConsumerWidget {
           ),
         );
       },
-      loading: () => const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator())),
+      loading:
+          () => const SliverToBoxAdapter(
+            child: Center(child: CircularProgressIndicator()),
+          ),
       error: (err, st) => SliverToBoxAdapter(child: Text("유저 정보를 불러올 수 없습니다")),
     );
   }

@@ -33,14 +33,13 @@ class DefaultLayout extends StatelessWidget {
       return null;
     } else if(title == 'User'){
       return AppBar(
-        toolbarHeight: 100,
-        backgroundColor: PRIMARY_500,
+        backgroundColor: WHITE,
         elevation: 0,
         title: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(title!, style: SUB_TITLE_19),
         ),
-        foregroundColor: WHITE,
+        foregroundColor: Colors.black,
         actions: [
             IconButton(
               onPressed: () {

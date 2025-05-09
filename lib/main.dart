@@ -2,6 +2,7 @@ import 'package:bronze_mirror/common/api/dio_provider.dart';
 import 'package:bronze_mirror/env.dart';
 import 'package:bronze_mirror/firebase_options.dart';
 import 'package:bronze_mirror/onboarding/view/splash_screen.dart';
+import 'package:bronze_mirror/test/test.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

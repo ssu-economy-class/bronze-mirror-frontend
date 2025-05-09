@@ -57,10 +57,11 @@ class _BronzeMirrorLoadingState extends State<BronzeMirrorLoading> with SingleTi
 }
 
 class BronzeMirror extends StatelessWidget {
-  const BronzeMirror({super.key});
+  final double size;
+  const BronzeMirror({this.size = 220, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset('assets/logo/bronze_mirror.png', height: 220, width: 220);
+    return Image.asset('assets/logo/bronze_mirror.png', height: size , width: size );
   }
 }
